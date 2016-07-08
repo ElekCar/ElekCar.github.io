@@ -1,43 +1,146 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Automatic car</title>
-  <meta charset="utf-8"/>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="main.css">
-</head>
-<body>
+//create the canvas
+var canvas = document.createElement("canvas");
+var ctx = canvas.getContext("2d");
+canvas.width = 512;
+canvas.height = 480;
+document.body.appendChild(canvas);
+
+//background image
+var bgReady = false;
+var bgImage = new Image();
+bgImage.onload = function ()
+  {
+  bgReady = true;
+  };
+bgImage.src = "http://www.planettrash.nl/images/2009-05/zwart.jpg";
+
+// Game objects
+var hero = 
+   {
+   speed: 256,
+   x: 0,
+   y: 0
+   };
+var monster = 
+   {
+   x:0,
+   y:0
+   };
+var monsterCaught = 0
+
+//Handle keyboard controls
+var keysDown = {};
+
+addEventListener("keydown", function (e)
+  {
+  keysDown[e.keyCode] = true;
+  }, false);
   
-<header class="container">
-  <div class="row">
-    <nav class="col-sm-4 text-left">stinky robbe</nav>
-    <nav class="col-sm-8 text-right">
-      <a class="btn btn-primary"
-         href="#" role="button">item 1</a>
-      <a class="btn btn-primary"
-         href="#" role="button">item 2</a>
-      <a class="btn btn-primary"
-         href="#" role="button">item 3</a>
-    </nav>
-  </div>
-</header>
+addEventListener("keyup", function (e)
+  {
+  delete keysDown[e.keyCode];
+  }, false);
 
-<section class="container">
-<div class="row">
-<figure class="col-sm-6"><p>toren</p><img src="https://www.travelmoodz.com/uploads/content/image/Eiffel-tower-Paris.jpg"/></figure>
-<figure class="col-sm-6"><p>robbe en robbe</p><img src="https://scontent-amt2-1.xx.fbcdn.net/v/t1.0-9/943360_658727770828305_823247231_n.jpg?oh=c18f95b0435cf88cc48d662b1155940f&oe=57F053EF"/></figure> 
-</div>
-<div class="row">
-<figure class="col-sm-6"><p>robbe coldnice</p><img src="https://scontent-amt2-1.xx.fbcdn.net/v/t1.0-9/1170657_1071579002863260_7690723214440840957_n.jpg?oh=226927fba3abd77da268584027f031cb&oe=57EF3A43"/></figure> 
-<figure class="col-sm-6"><p>bieeerrr</p><img src="https://scontent-amt2-1.xx.fbcdn.net/v/t1.0-9/13592584_1761158657461566_7648145967745341643_n.jpg?oh=36217f76cd3b43d7071505f36653dc8b&oe=582D812D"/></figure> 
-</div>  
-</section>
+//reset the game when the player catches a monster
+var reset = function () {
+	hero.x = canvas.width / 2;
+	hero.y = canvas.height / 2;
 
-  <footer class="container">
-  <div class="row">
-   
-  </div>
-</footer>
-</body>
+	// Throw the monster somewhere on the screen randomly
+	monster.x = 32 + (Math.random() * (canvas.width - 64));
+	monster.y = 32 + (Math.random() * (canvas.height - 64));
+};
+  
+  //Update game objects
+  var update = function(modifier)
+  {
+    if(38 in keysDown) 
+    {
+      {
+      //player holding up
+      hero.y -= hero.speed * modifier;
+      }
+    }
+    if(40 in keysDown) 
+    {
+      {
+      //player holding down
+      hero.y += hero.speed * modifier;
+      }
+    }
+    if(37 in keysDown) 
+    {
+      {
+      //player holding left
+      hero.x -= hero.speed * modifier;
+      }
+    }
+    if(39 in keysDown) 
+    {
+      {
+      //player holding right
+      hero.x += hero.speed * modifier;
+      }
+    }
+    
+    //are they touching?
+    if(
+    hero.x <=(monster.x + 32)
+    && monster.x <= (hero.x + 32)
+    && hero.y <= (monster.y +32)
+    && monster.y <= (hero.y + 32)
+    )
+    {
+    ++monstersCaught;
+    reset();
+    }
+  };
+    }
+    
+  // Draw everything
+var render = function () {
+	if (bgReady) {
+		ctx.drawImage(bgImage, 0, 0);
+	}
+
+	if (heroReady) {
+		ctx.drawImage(heroImage, hero.x, hero.y);
+	}
+
+	if (monsterReady) {
+		ctx.drawImage(monsterImage, monster.x, monster.y);
+	}
+
+	// Score
+	ctx.fillStyle = "rgb(250, 250, 250)";
+	ctx.font = "24px Helvetica";
+	ctx.textAlign = "left";
+	ctx.textBaseline = "top";
+	ctx.fillText("Monsterrs caught: " + monstersCaught, 32, 32);
+};
+
+// The main game loop
+var main = function () {
+	var now = Date.now();
+	var delta = now - then;
+
+	update(delta / 1000);
+	render();
+
+	then = now;
+
+	// Request to do this again ASAP
+	requestAnimationFrame(main);
+};
+
+// Cross-browser support for requestAnimationFrame
+var w = window;
+requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
+
+// Let's play this game!
+var then = Date.now();
+reset();
+main();
 </html>
