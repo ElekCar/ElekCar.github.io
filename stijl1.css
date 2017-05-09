@@ -27,6 +27,10 @@ p{
 font-size:20pt;
 font-family:Verdana;
 }
+div.foto{
+height:500px;
+width:500px;
+}
 h1{
 font-size:40pt;
 }
