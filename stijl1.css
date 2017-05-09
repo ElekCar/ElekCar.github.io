@@ -31,17 +31,6 @@ h1{
 font-size:40pt;
 }
 
-div.tekst{
-	height:550px;
-}
-div.foto{
-	float: left;
-    width: 500px;
-	height:500px;
-    margin: 0;
-    padding: 2em;
-}
-
 footer{
 
 background-color:blue;
