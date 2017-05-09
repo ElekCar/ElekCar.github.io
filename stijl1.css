@@ -1,0 +1,48 @@
+body {margin: 0;}
+
+   ul.menu {
+		list-style-type: none;
+		margin: 0;
+		width: 100%;
+		height: 100;
+		background-color: lightgrey;
+		position: fixed;
+		overflow: auto;
+	}
+
+	ul.menu li a {
+		float:left;
+		color: white;
+		width: 15%;
+		height: 90px;
+		text-align:center;
+		font-size:60;
+	}
+	 
+	ul.menu li a:hover:not(.active) {
+		background-color: darkgrey;
+		color: white;
+	}
+p{
+font-size:20pt;
+font-family:Verdana;
+}
+h1{
+font-size:40pt;
+}
+
+div.tekst{
+	height:550px;
+}
+div.foto{
+	float: left;
+    width: 500px;
+	height:500px;
+    margin: 0;
+    padding: 2em;
+}
+
+footer{
+
+background-color:blue;
+}
