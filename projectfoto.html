@@ -3,68 +3,28 @@
 
 
 <html>
-
    <head>
-
-      <title>change picture</title>
-
-	  <link rel=stylesheet href=stijl1.css type=text/css>
-
+      <title>Verander ledjes van kleur</title>
    </head>
-
-
-
    <body onload = "startTimer()">
-
        <img id="led" src="blueled.jpg" width=100% height=100/>
-
-
-
        <script type = "text/javascript">
-
-           var images = [], x = -1;
-
+        var images = [], x = -1;
            images[0] = "greenled.jpg";
-
            images[1] = "redled.png";
-
            images[2] = "blueled.jpg";
-
-
-
- 		  function displayNextImage() {
-
- 			  if(x==2){
-
- 				  x=0;
-
-        }else{
-
-          x++;
-
+ 		function displayNextImage() {
+ 		  if(x==2){
+			x=0;
+          }else{
+            x++;
         };
-
- 			  var docHeight = screen.width;
-
         document.getElementById("led").src = images[x];
-
-      }
-
-
-
-           function startTimer() {
-
-               setInterval(displayNextImage, 1000);
-
-           }
-
-
-
-
-
+        }
+        function startTimer() {
+          setInterval(displayNextImage, 2000);
+        }
        </script>
-
    </body>
-
 </html>
 
